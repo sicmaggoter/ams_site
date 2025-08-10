@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ΑΜΣ Αναγέννηση Πανοράματος</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#013369;
+    --gold:#e6b800;
+    --dark:#222;
+    --soft:#f0f0f0; /* γλυκό γκρι φόντο */
+  }
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Roboto,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--soft);color:var(--dark)}
+  header{background:var(--navy);color:#fff;text-align:center;padding:16px 12px}
+  header img{height:150px;/* ~70% μεγαλύτερο από 90px */width:auto}
+  header h1{margin:8px 0 0 0;font-size:28px;font-weight:700}
+
+  nav{background:var(--gold);display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
+  nav a{color:#000;font-weight:700;text-decoration:none;padding:8px 12px;border-radius:8px}
+  nav a:hover{background:rgba(0,0,0,.06)}
+
+  .hero{
+    background:url('assets/photo1.jpg') center/cover no-repeat;
+    color:#fff;text-align:center;padding:80px 20px;
+    text-shadow:0 2px 8px rgba(0,0,0,.5);
+  }
+  .hero h1{margin:0 0 8px;font-size:32px}
+  .hero p{margin:0;font-size:18px}
+
+  section{padding:30px 20px;max-width:1100px;margin:0 auto}
+  h2{color:var(--navy);border-bottom:3px solid var(--gold);padding-bottom:6px;margin-top:0}
+
+  /* ΤΜΗΜΑΤΑ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
+  .card{background:#f5f5f5;border-radius:10px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+  .card strong{color:var(--navy)}
+
+  /* ΑΝΑΚΟΙΝΩΣΕΙΣ */
+  #news{background:#fff;border-radius:12px}
+  .announcement{background:#f8f8f8;border-left:5px solid var(--navy);padding:16px;border-radius:8px;margin:16px 0}
+  .announcement h3{margin:0 0 8px;color:var(--navy)}
+
+  /* GALLERY (όπως πριν: grid + JS lightbox) */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .gallery figure{margin:0}
+  .gallery img{width:100%;display:block;border-radius:8px;cursor:pointer;transition:transform .15s}
+  .gallery img:hover{transform:scale(1.03)}
+  .caption{text-align:center;font-size:14px;margin-top:6px}
+
+  /* Lightbox overlay */
+  .lightbox{display:none;position:fixed;z-index:999;inset:0;background:rgba(0,0,0,.9);padding:40px 10px}
+  .lightbox.open{display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .lightbox img{max-width:90vw;max-height:70vh;border-radius:8px}
+  .lightbox .lb-cap{color:#ccc;margin-top:10px}
+  .lightbox .lb-close{position:absolute;top:16px;right:22px;font-size:38px;color:#fff;cursor:pointer}
+
+  /* ΑΡΧΕΙΑ */
+  .file-links a{display:block;margin:10px 0;font-weight:700;color:var(--navy);text-decoration:none}
+  .file-links a:hover{text-decoration:underline}
+
+  /* ΕΠΙΚΟΙΝΩΝΙΑ */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .contact-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.06);padding:16px}
+  iframe.map{width:100%;height:300px;border:0;border-radius:10px}
+
+  footer{background:#00264d;color:#fff;text-align:center;padding:16px;margin-top:30px}
+
+  @media (max-width:780px){
+    .hero{padding:60px 16px}
+    .hero h1{font-size:26px}
+    .contact-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="assets/logo.png" alt="Λογότυπο ΑΜΣ Αναγέννηση Πανοράματος" />
+  <h1>ΑΜΣ Αναγέννηση Πανοράματος</h1>
+</header>
+
+<nav>
+  <a href="#about">Η Ακαδημία</a>
+  <a href="#news">Ανακοινώσεις</a>
+  <a href="#teams">Τμήματα</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#files">Αρχεία</a>
+  <a href="#contact">Επικοινωνία</a>
+</nav>
+
+<section class="hero">
+  <h1>Καλώς ήρθατε στην Ακαδημία μας</h1>
+  <p>Οι εγγραφές για τη νέα σεζόν ξεκίνησαν!</p>
+</section>
+
+<section id="about">
+  <h2>Η Ακαδημία</h2>
+  <p>Η ΑΜΣ Αναγέννηση Πανοράματος είναι ένας χώρος ανάπτυξης, μάθησης και αθλητικής εξέλιξης για παιδιά κάθε ηλικίας. Στόχος μας είναι η προαγωγή του αθλητισμού και των αξιών του ποδοσφαίρου.</p>
+</section>
+
+<section id="news">
+  <h2>Ανακοινώσεις</h2>
+  <!-- Πάντα η πιο πρόσφατη πρώτη -->
+  <div class="announcement">
+    <h3>Έναρξη Νέας Χρονιάς – 26 Αυγούστου 2025</h3>
+    <p>Η ακαδημία ποδοσφαίρου Α.Μ.Σ  ΠΑΝΟΡΑΜΑ και Α.Μ.Σ ΑΝΑΓΕΝΝΗΣΗ ΠΑΝΟΡΑΜΑΤΟΣ , θα ξεκινησει για την νεα χρονια , την <strong>Τριτη  26/8/2025  στις 18.00</strong> στο Ολυμπιακο κεντρο Πανοραματος.</p>
+    <p>Οι ποδοσφαιριστες της ακαδημιας μας που γεννηθηκαν το 2009 και το 2010 μπορουν να συμμετεχουν (προαιρετικα) στην προετοιμασια της ανδρικης ομαδας η οποια θα ξεκινησει στις <strong>11 Αυγουστου στις 19.00</strong> στο γηπεδο της Αναληψης. (Θα ειναι παρων ο προπονητης της ακαδημιας μας κ Ζεκκας Βασιλης).</p>
+    <p>Οι ποδοσφαιριστές της ακαδημιας μας που γεννήθηκαν το 2011 το 2012 ,το  2013 και το 2014 ,θα κανουν δυο προπονησεις με τον κ Λαμπάδα  Κωστα , στις <strong>19/8/2025</strong> και στις <strong>21/8/2025 στις 18.30</strong> στο Ολυμπιακο κεντρο Πανοραματος.</p>
+    <p>Σε αυτές τις δυο προπονησεις  προετοιμασίας , μπορουν να ερθουν ,να κανουν προπονηση ,  παιδια που δεν ειναι μελη της ακαδημιας μας.</p>
+    <p>Οι  προεγγραφές σε ολα τα τμηματα  αρχησαν. Δηλωστε απο τωρα την συμμετοχη των παιδιων σας ,για να δηλωθούν έγκαιρα οι ομαδες και τα τμηματα στην  Ε.Π.Σ.Μ. Θα ειναι πιο εύκολο  ,να σας ανακοινώσουμε  και τα ωράρια  ,ολων των τμηματων.</p>
+    <p><strong>Τμηματα για αγορια και κοριτσια απο 4 εως 18 ετων.</strong></p>
+  </div>
+</section>
+
+<section id="teams">
+  <h2>Τμήματα &amp; Προπονητές</h2>
+  <div class="grid">
+    <div class="card"><strong>Κ4 / Κ5</strong><br>Λαμπάδας Κώστας – Ασαρίδης Κυριάκος</div>
+    <div class="card"><strong>Κ6 / Κ7</strong><br>Ιωαννίδης Θ. – Κισκίνης Ν. – Λαμπάδας Σ.</div>
+    <div class="card"><strong>Κ8</strong><br>Λαμπάδας Κώστας – Ιωαννίδης Θάνος</div>
+    <div class="card"><strong>Κ9</strong><br>Λαμπάδας Κώ</div>
+    <div class="card"><strong>Κ10</strong><br>Σταυρίδης Ανδρ.</div>
+    <div class="card"><strong>Κ11</strong><br>Τσουκαλάς Γιάννης</div>
+    <div class="card"><strong>Κ13 (9x9)</strong><br>Γονιωτάκης Π.</div>
+    <div class="card"><strong>Κ14 (11x11)</strong><br>Λαμπάδας Κώστας – Σταυρίδης Ανδρέας</div>
+    <div class="card"><strong>Κ15 (11x11)</strong><br>Λαμπάδας Κ. – Σταυρίδης Α.</div>
+    <div class="card"><strong>Κ16</strong><br>Ζέκκας Β. – Λαζαρίδης Τάσος</div>
+    <div class="card"><strong>Κ17</strong><br>Ζέκκας Β. – Κισκίνης Σ.</div>
+    <div class="card"><strong>Τμήμα Κοριτσιών</strong><br>Λαμπάδας Κ. – Τσουκαλάς Γ. – Κισκίνης Νικόλης</div>
+    <div class="card"><strong>Τμήμα Τερματοφυλάκων</strong><br>Χαντζαρίδης Χρήστος</div>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery">
+    <!-- Όπως πριν: εικόνες που ανοίγουν σε lightbox με κλικ -->
+    <figure><img src="assets/photo1.jpg"  alt="Φωτ1"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ1</figcaption></figure>
+    <figure><img src="assets/photo2.jpg"  alt="Φωτ2"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ2</figcaption></figure>
+    <figure><img src="assets/photo3.jpg"  alt="Φωτ3"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ3</figcaption></figure>
+    <figure><img src="assets/photo4.jpg"  alt="Φωτ4"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ4</figcaption></figure>
+    <figure><img src="assets/photo5.jpg"  alt="Φωτ5"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ5</figcaption></figure>
+    <figure><img src="assets/photo6.jpg"  alt="Φωτ6"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ6</figcaption></figure>
+    <figure><img src="assets/photo7.jpg"  alt="Φωτ7"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ7</figcaption></figure>
+    <figure><img src="assets/photo8.jpg"  alt="Φωτ8"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ8</figcaption></figure>
+    <figure><img src="assets/photo9.jpg"  alt="Φωτ9"  onclick="openLightbox(this)"><figcaption class="caption">Φωτ9</figcaption></figure>
+    <figure><img src="assets/photo10.jpg" alt="Φωτ10" onclick="openLightbox(this)"><figcaption class="caption">Φωτ10</figcaption></figure>
+    <figure><img src="assets/photo11.jpg" alt="Φωτ11" onclick="openLightbox(this)"><figcaption class="caption">Φωτ11</figcaption></figure>
+    <figure><img src="assets/photo12.jpg" alt="Φωτ12" onclick="openLightbox(this)"><figcaption class="caption">Φωτ12</figcaption></figure>
+    <figure><img src="assets/photo13.jpg" alt="Φωτ13" onclick="openLightbox(this)"><figcaption class="caption">Φωτ13</figcaption></figure>
+    <figure><img src="assets/photo14.jpg" alt="Φωτ14" onclick="openLightbox(this)"><figcaption class="caption">Φωτ14</figcaption></figure>
+  </div>
+</section>
+
+<section id="files">
+  <h2>Αρχεία</h2>
+  <div class="file-links">
+    <a href="assets/form_interest.pdf" target="_blank">📄 Φόρμα Ενδιαφέροντος (PDF)</a>
+    <a href="assets/rules.pdf" target="_blank">📄 Κανονισμός Ακαδημίας (PDF)</a>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Επικοινωνία</h2>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <p><strong>Λαμπάδας Κώστας:</strong> 6973034246</p>
+      <p><strong>Κισκίνης Αστέριος:</strong> 6948084640</p>
+      <p><a href="https://www.facebook.com/groups/290683414473127" target="_blank">Facebook</a> ·
+         <a href="https://www.tiktok.com/@kostas.lamb9" target="_blank">TikTok</a></p>
+      <p><strong>Προπονήσεις:</strong> Ολυμπιακό Κέντρο Πανοράματος</p>
+    </div>
+    <div class="contact-card">
+      <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.367565517425!2d23.0344971!3d40.5817865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a84731819be731%3A0x9fffbf77993389aa!2sPylaia-Chortiatis%20552%2036!5e0!3m2!1sel!2sgr!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 ΑΜΣ Αναγέννηση Πανοράματος</p>
+</footer>
+
+<!-- Lightbox (όπως πριν: JS άνοιγμα/κλείσιμο) -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="lb-close" onclick="closeLightbox();event.stopPropagation();">&times;</span>
+  <img id="lb-img" src="" alt="">
+  <div id="lb-cap" class="lb-cap"></div>
+</div>
+
+<script>
+  function openLightbox(img){
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-cap').textContent = img.alt;
+    lb.classList.add('open');
+  }
+  function closeLightbox(){
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('open');
+  }
+  // Κλείσιμο με ESC
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
